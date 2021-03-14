@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import include
+import blog.views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path('',blog.views.home ,name='home'),
+    path('<int:blog_id>',blog.views.detail,name="detail"),
+    path('admin/', admin.site.urls,name="hoe"),
+    path('games/',include('games.urls'))
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
